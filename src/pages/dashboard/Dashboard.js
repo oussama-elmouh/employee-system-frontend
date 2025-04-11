@@ -25,6 +25,26 @@ const Dashboard = () => {
     
         fetchEmployees();
     }, []);
+    const handleDelete = async (employeeId) => {
+        try {
+          const response = await fetch(`http://localhost:8080/api/employee/${employeeId}`, {
+            method: "DELETE", // ✅ correct spelling
+          });
+      
+          if (response.ok) {
+            // Mettre à jour la liste après suppression
+            setEmployees(prevEmployees =>
+              prevEmployees.filter(emp => emp.id !== employeeId)
+            );
+            console.log(`Employee with ID ${employeeId} deleted successfully`);
+          } else {
+            console.error("Failed to delete employee. Server returned", response.status);
+          }
+        } catch (error) {
+          console.error("Error deleting employee:", error.message);
+        }
+      };
+      
     
   return (
     <>
@@ -54,7 +74,7 @@ const Dashboard = () => {
                             <td>
                                 
                                 <Button variant="outline-secondary">Update</Button>{" "}
-                                <Button variant="outline-danger">Delete</Button>
+                                <Button variant="outline-danger" onClick={()=>handleDelete(employee.id)}>Delete</Button>
                               
                             </td>
                         </tr>    

@@ -23,24 +23,25 @@ const PostUser = () => {
   
 
   const navigate = useNavigate();
-  const handelSubmit = async (e) =>{
+  const handelSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
-
-    try{
-        const respons =await fetch("http://localhost:8080/api/employee",{
-            methode : "POST",
-            header : {"Content-Type": "application/json"},
-            body: JSON.stringify(formaData)
-        });
-
-        const data = await Response.json();
-        console.log("Employee created: ",data); 
-        navigate("/") 
-    } catch (error){
-        console.log("Error creating cmpolyee:",error.message);
+  
+    try {
+      const response = await fetch("http://localhost:8080/api/employee", {
+        method: "POST", // ✅ correct spelling
+        headers: { "Content-Type": "application/json" }, // ✅ "headers" with 's'
+        body: JSON.stringify(formData), // ✅ fix typo
+      });
+  
+      const data = await response.json(); // ✅ lowercase response
+      console.log("Employee created: ", data);
+      navigate("/");
+    } catch (error) {
+      console.log("Error creating employee:", error.message); // ✅ fixed typo in log
     }
-  }
+  };
+  
 
   return (
      
