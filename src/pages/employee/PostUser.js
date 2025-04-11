@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./PostUser.css";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { useNavigate } from "react-router"
 console.log("PostUser loaded")
 const PostUser = () => {
   const [formData, setFormData] = useState({
@@ -18,9 +19,27 @@ const PostUser = () => {
       [name]: value,
     });
   };
+
+  
+
+  const navigate = useNavigate();
   const handelSubmit = async (e) =>{
     e.preventDefault();
     console.log(formData);
+
+    try{
+        const respons =await fetch("http://localhost:8080/api/employee",{
+            methode : "POST",
+            header : {"Content-Type": "application/json"},
+            body: JSON.stringify(formaData)
+        });
+
+        const data = await Response.json();
+        console.log("Employee created: ",data); 
+        navigate("/") 
+    } catch (error){
+        console.log("Error creating cmpolyee:",error.message);
+    }
   }
 
   return (
